@@ -1,47 +1,34 @@
+var dataTable = data; 
+
 // Console.log the UFO dataset
-console.log(data);
+console.log(dataTable);
 
 
 // Get a reference to the table body. I am selecting an element to the body before start appending
 var tbody = d3.select("tbody");
 
 
-// Use a traditional loop for a list of dictionaries. We comment it out after testing it is working
-
-//for (var i=0; i < data.length; i++) {
-    //var record = data[i];
-  //console.log(record)
-
-  //var row = tbody.append('tr')
-  //row.append('td').text(record.datetime)
-  //row.append('td').text(record.city)
-  //row.append('td').text(record.state)
-  //row.append('td').text(record.country)
-  //row.append('td').text(record.shape)
- //row.append('td').text(record.durationMinutes)
-  //row.append('td').text(record.comments)
-//}
-
-// For each element of data it will apply some function (buildTable)
-// Use a Javastyle loop for a list of dictionaries.
-
-data.forEach(buildTable);
-
 function buildTable(single_UFO) {
-  var row =tbody.append('tr')
-  row.append('td').text(single_UFO.city)
-  row.append('td').text(single_UFO.datetime)
-  row.append('td').text(single_UFO.state)
-  row.append('td').text(single_UFO.country)
-  row.append('td').text(single_UFO.durationMinutes)
-  row.append('td').text(single_UFO.comments)
+  tbody.html("");
+
+  single_UFO.forEach((data)=>{
+    var row =tbody.append('tr');
+    Object.values(data).forEach((record)=>{
+      let cell = row.append('td');
+      cell.text(record);
+
+    });
+  });
+
+  
 }
 
-// Select the button
-var button =d3.select("#filter-btn");
 
-// Select the form
-var form =d3.select("#form-control");
+
+
+
+
+
 
 // Create the function to run for both events
 function runEnter() {
@@ -60,11 +47,18 @@ function runEnter() {
   
 
 }
+// Select the form
+var form =d3.select("#form-control");
+form.on("change",runEnter);
 
+// Select the button
+d3.select("#filter-btn").on("click",runEnter);
 
+buildTable(dataTable);
   //YOUR_CODE_HERE
     // Apply `filter` to the table data to only keep the
-    // rows where the `datetime` value matches the filter value
+    
+  // rows where the `datetime` value matches the filter value
     //YOUR_CODE_HERE
   
 
