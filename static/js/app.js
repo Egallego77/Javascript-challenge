@@ -3,10 +3,8 @@ var dataTable = data;
 // Console.log the UFO dataset
 console.log(dataTable);
 
-
 // Get a reference to the table body. I am selecting an element to the body before start appending
 var tbody = d3.select("tbody");
-
 
 function buildTable(single_UFO) {
   tbody.html("");
@@ -23,53 +21,42 @@ function buildTable(single_UFO) {
   
 }
 
-
-
-
-
-
-
-
-// Create the function to run for both events
-function runEnter() {
-
+// This function triggers when the button is clicked.
+function handleClick() {
+  
+  tbody.html("")
+  
   // Prevent the page from refreshing
   d3.event.preventDefault();
+  
+  
   // Select the input element and get the raw HTML node
   var inputElement = d3.select("#datetime");
 
   // Get the value property of the input element
 
   var inputValue = inputElement.property("value");
-
-  // Print the value to the console
   console.log(inputValue);
-  
+  if (inputValue === "") {
+    buildTable(dataTable);
+    
+
+  } else {
+      var filteredData = dataTable.filter(ufoEvent => ufoEvent.datetime === inputValue);
+      buildTable(filteredData);
+    }
 
 }
-// Select the form
-var form =d3.select("#form-control");
-form.on("change",runEnter);
 
 // Select the button
-d3.select("#filter-btn").on("click",runEnter);
 
+var button = d3.select("#filter-btn")
+
+// Create event handlers or defines a function handleClick that takes no arguments.
+button.on("click", handleClick);
+
+
+//var filteredData = dataTable.filter(dataTable => dataTable.datetime === inputValue);
+//console.log(filteredData);
 buildTable(dataTable);
-  //YOUR_CODE_HERE
-    // Apply `filter` to the table data to only keep the
-    
-  // rows where the `datetime` value matches the filter value
-    //YOUR_CODE_HERE
-  
 
-  // Rebuild the table by calling you buildTable() function and passing in your filteredData variable
-  // @NOTE: If no date was entered, then filteredData will
-  // just be the original tableData.
-  //YOUR_CODE_HERE;
-
-
-// Attach an event to listen for the form button #filter-btn to be clicked, it should call your handleClick function
-//YOUR_CODE_HERE;
-
-// Build the table with your buildTable function when the page loads
-//YOUR_CODE_HERE;
